@@ -13,7 +13,7 @@ using RebitMqPostman.Common.Logger;
 namespace RebitMqPostman.BLL.RebitMq
 {
     public class RabitMqSender : IRebitMqSender
-    {    
+    {
         private IConnection _connection;
         private readonly RabbitMqConfiguration _rabbitMqConfiguration;
         private readonly ILogger<RabitMqSender> _logger;
@@ -22,7 +22,7 @@ namespace RebitMqPostman.BLL.RebitMq
         public RabitMqSender(ILogger<RabitMqSender> logger, ILoggerFactory loggerFactory, IOptions<RabbitMqConfiguration> rabbitMqOptions)
         {
             _logger = logger;
-            loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), $"logger{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}.txt"));
+            loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), $"Logs/logger{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}.txt"));
             _customLogger = loggerFactory.CreateLogger("FileLogger");
 
             _rabbitMqConfiguration = rabbitMqOptions.Value;
@@ -44,7 +44,7 @@ namespace RebitMqPostman.BLL.RebitMq
                     channel.BasicPublish(exchange: "", routingKey: _rabbitMqConfiguration.QueueName, basicProperties: null, body: body);
 
                     _logger.LogInformation(json, "RebitMq send message");
-                    _customLogger.LogInformation(json, "RebitMq send message");   
+                    _customLogger.LogInformation(json, "RebitMq send message");
                 }
             }
         }
