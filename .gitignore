@@ -1,0 +1,10 @@
+/.git
+/.vs
+/packages
+/TestResults
+
+**/bin
+**/obj
+
+*.vssscc
+*.vspscc
