@@ -2,8 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>53030d07-ac5f-4ea7-8e46-7ec7c1a0f86c</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <UserSecretsId>53030d07-ac5f-4ea7-8e46-7ec7c1a0f86c</UserSecretsId>   
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\GitHub\RebitMq\CoreRebitMq\RebitMqPostman\RebitMqPostman\RebitMqPostman\RebitMqPostman.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,14 +16,11 @@
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="3.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\RebitMqPostman.BLL\RebitMqPostman.BLL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Configuration\Middlewares\" />
   </ItemGroup>
 
 

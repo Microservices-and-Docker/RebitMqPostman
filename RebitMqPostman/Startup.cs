@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using MediatR;
 using RebitMqPostman.BLL;
 using RebitMqPostman.Configuration.Services;
+using RebitMqPostman.Configuration.Middlewares;
 
 namespace RebitMqPostman
 {
@@ -26,6 +27,7 @@ namespace RebitMqPostman
             services.AddVersioning();
             services.AddAutoMapper(typeof(Startup));
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddSwaggerService("RebitMq Postman");
 
             services.ConfigureBLL(Configuration);
         }
@@ -40,6 +42,7 @@ namespace RebitMqPostman
 
             app.UseHttpsRedirection();
 
+            app.AddSwaggerDefaultRoute("RebitMqPostman API V1");
             app.UseRouting();
 
             app.UseAuthorization();

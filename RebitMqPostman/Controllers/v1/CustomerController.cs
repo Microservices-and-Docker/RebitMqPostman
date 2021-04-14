@@ -23,10 +23,18 @@ namespace RebitMqPostman.Controllers.v1
             _mediator = mediator;
         }
 
-        [HttpPost]
+        /// <summary>
+        /// Action to create a new customer in the database.
+        /// </summary>
+        /// <param name="createCustomerModel">Model to create a new customer</param>
+        /// <returns>Returns the created customer</returns>
+        /// <response code="200">Returned if the customer was created</response>
+        /// <response code="400">Returned if the model couldn't be parsed or the customer couldn't be saved</response>
+        /// <response code="422">Returned when the validation failed</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [HttpPost]
         public async Task<ActionResult<Customer>> Index(CreateCustomerModel createCustomerModel)
         {
             return await _mediator.Send(new CreateCustomerCommand
