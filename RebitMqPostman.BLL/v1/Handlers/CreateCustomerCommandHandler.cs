@@ -1,17 +1,18 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using RebitMqPostman.BLL.Interfaces;
 using RebitMqPostman.BLL.Models;
 using RebitMqPostman.BLL.v1.Handlers.Comands;
 
 namespace RebitMqPostman.BLL.v1.Handlers
 {
-    public class MessageHendler
+    public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, Customer>
     {
         private readonly IRebitMqSender _rebitMqSender;
       //  private readonly ICustomerRepository _customerRepository;
 
-        public MessageHendler(IRebitMqSender rebitMqSender) //, ICustomerRepository customerRepository
+        public CreateCustomerCommandHandler(IRebitMqSender rebitMqSender) //, ICustomerRepository customerRepository
         {
             _rebitMqSender = rebitMqSender;
            // _customerRepository = customerRepository;
