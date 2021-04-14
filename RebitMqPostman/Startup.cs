@@ -1,8 +1,10 @@
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MediatR;
 using RebitMqPostman.BLL;
 using RebitMqPostman.Configuration.Services;
 
@@ -23,6 +25,7 @@ namespace RebitMqPostman
             services.AddControllers();
             services.AddVersioning();
             services.AddAutoMapper(typeof(Startup));
+            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.ConfigureBLL(Configuration);
         }

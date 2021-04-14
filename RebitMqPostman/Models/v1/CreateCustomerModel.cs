@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace RebitMqPostman.Models
+namespace RebitMqPostman.Models.v1
 {
-    public class UpdateCustomerModel
+    public class CreateCustomerModel
     {
         [Required] public string FirstName { get; set; }
 

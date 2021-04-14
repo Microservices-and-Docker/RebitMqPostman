@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.0" />
@@ -15,6 +16,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RebitMq.Commmon\RebitMqPostman.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="v1\Query\" />
   </ItemGroup>
 
 </Project>
