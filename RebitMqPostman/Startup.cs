@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RebitMqPostman.BLL;
+using RebitMqPostman.Configuration.Services;
 
 namespace RebitMqPostman
 {
@@ -20,6 +21,7 @@ namespace RebitMqPostman
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddVersioning();
 
             services.ConfigureBLL(Configuration);
         }
