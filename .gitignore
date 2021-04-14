@@ -5,6 +5,7 @@
 
 **/bin
 **/obj
+**/Logs
 
 *.vssscc
 *.vspscc
