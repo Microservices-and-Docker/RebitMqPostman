@@ -22,6 +22,7 @@ namespace RebitMqPostman
         {
             services.AddControllers();
             services.AddVersioning();
+            services.AddAutoMapper(typeof(Startup));
 
             services.ConfigureBLL(Configuration);
         }
