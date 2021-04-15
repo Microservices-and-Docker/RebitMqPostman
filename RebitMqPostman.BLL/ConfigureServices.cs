@@ -7,6 +7,7 @@ using RebitMqPostman.BLL.Models;
 using RebitMqPostman.BLL.RebitMq;
 using RebitMqPostman.BLL.v1.Handlers;
 using RebitMqPostman.BLL.v1.Handlers.Comands;
+using RebitMqPostman.BLL.v1.Services;
 
 namespace RebitMqPostman.BLL
 {
@@ -17,8 +18,15 @@ namespace RebitMqPostman.BLL
         /// </summary>
         public static void ConfigureBLL(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<RabbitMqConfiguration>(configuration.GetSection("RabbitMqConfiguration"));
+            // services.Configure<RabbitMqConfiguration>(configuration.GetSection("RabbitMqConfiguration"));
+            var serviceClientSettingsConfig = configuration.GetSection("RabbitMq");
+            var serviceClientSettings = serviceClientSettingsConfig.Get<RabbitMqConfiguration>();
+            services.Configure<RabbitMqConfiguration>(serviceClientSettingsConfig);
 
+            if (serviceClientSettings.Enabled)
+            {
+                services.AddHostedService<RabbitMqNewCustomerListener>();
+            }
 
             services.AddTransient<IRebitMqSender, RabitMqSender>();
 

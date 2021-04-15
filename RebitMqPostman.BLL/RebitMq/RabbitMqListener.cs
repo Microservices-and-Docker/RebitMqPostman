@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -16,9 +15,9 @@ namespace RebitMqPostman.BLL.RebitMq
         private IConnection _connection;
         private readonly RabbitMqConfiguration _rabbitMqConfiguration;
 
-        public RabbitMqListener(IOptions<RabbitMqConfiguration> rabbitMqOptions)
+        public RabbitMqListener(RabbitMqConfiguration rabbitMqOptions)
         {
-            _rabbitMqConfiguration = rabbitMqOptions.Value;
+            _rabbitMqConfiguration = rabbitMqOptions;
 
             InitializeRabbitMqListener();
         }
