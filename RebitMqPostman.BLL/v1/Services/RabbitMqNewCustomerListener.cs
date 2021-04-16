@@ -15,8 +15,7 @@ namespace RebitMqPostman.BLL.v1.Services
         }
 
         public override void HandleMessage(Customer message)
-        {
-            //to do add loggerFactory
+        {           
             // var customer = await _customerRepository.AddAsync(request.Customer);
 
             throw new NotImplementedException();

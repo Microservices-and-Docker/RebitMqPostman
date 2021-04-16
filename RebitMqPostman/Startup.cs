@@ -8,6 +8,7 @@ using MediatR;
 using RebitMqPostman.BLL;
 using RebitMqPostman.Configuration.Services;
 using RebitMqPostman.Configuration.Middlewares;
+using RebitMqPostman.Common.Models;
 
 namespace RebitMqPostman
 {
@@ -20,19 +21,22 @@ namespace RebitMqPostman
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var appConfigurationStr = Configuration.GetSection("AppSettings");
+            var appConfiguration = appConfigurationStr.Get<AppSettings>();
+            services.Configure<AppSettings>(appConfigurationStr);
+
             services.AddControllers();
             services.AddVersioning();
             services.AddAutoMapper(typeof(Startup));
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddSwaggerService("RebitMq Postman");
+            services.AddNLogConfiguration(appConfiguration);
 
             services.ConfigureBLL(Configuration);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -46,8 +50,9 @@ namespace RebitMqPostman
             app.UseRouting();
 
             app.UseAuthorization();
-            //добавить обработку ошибок
-            //add validator
+            //todo add request/response logger
+            //todo добавить обработку ошибок
+            //todo add validator
 
             app.UseEndpoints(endpoints =>
             {

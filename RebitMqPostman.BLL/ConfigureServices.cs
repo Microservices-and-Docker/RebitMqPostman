@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
 using RebitMqPostman.BLL.Interfaces;
 using RebitMqPostman.BLL.Models;
 using RebitMqPostman.BLL.RebitMq;
@@ -19,7 +18,7 @@ namespace RebitMqPostman.BLL
         public static void ConfigureBLL(this IServiceCollection services, IConfiguration configuration)
         {
             // services.Configure<RabbitMqConfiguration>(configuration.GetSection("RabbitMqConfiguration"));
-            var serviceClientSettingsConfig = configuration.GetSection("RabbitMq");
+            var serviceClientSettingsConfig = configuration.GetSection("RabbitMqConfiguration");
             var serviceClientSettings = serviceClientSettingsConfig.Get<RabbitMqConfiguration>();
             services.Configure<RabbitMqConfiguration>(serviceClientSettingsConfig);
 

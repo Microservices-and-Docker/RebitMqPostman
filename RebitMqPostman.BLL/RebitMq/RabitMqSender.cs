@@ -1,14 +1,11 @@
 ﻿using System;
-using System.IO;
 using System.Text;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
-
 using RebitMqPostman.BLL.Interfaces;
 using RebitMqPostman.BLL.Models;
-using RebitMqPostman.Common.Logger;
 
 namespace RebitMqPostman.BLL.RebitMq
 {
@@ -17,14 +14,10 @@ namespace RebitMqPostman.BLL.RebitMq
         private IConnection _connection;
         private readonly RabbitMqConfiguration _rabbitMqConfiguration;
         private readonly ILogger<RabitMqSender> _logger;
-        private readonly ILogger _customLogger;
 
-        public RabitMqSender(ILogger<RabitMqSender> logger, ILoggerFactory loggerFactory, IOptions<RabbitMqConfiguration> rabbitMqOptions)
+        public RabitMqSender(ILogger<RabitMqSender> logger, IOptions<RabbitMqConfiguration> rabbitMqOptions)
         {
             _logger = logger;
-            loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), $"Logs/logger{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}.txt"));
-            _customLogger = loggerFactory.CreateLogger("FileLogger");
-
             _rabbitMqConfiguration = rabbitMqOptions.Value;
 
             CreateConnection();
@@ -32,6 +25,8 @@ namespace RebitMqPostman.BLL.RebitMq
 
         public void SendMessage(object message)
         {
+            _logger.LogInformation("RebitMq send message");
+
             if (ConnectionExists() && _rabbitMqConfiguration.Enabled)
             {
                 using (var channel = _connection.CreateModel())
@@ -44,7 +39,6 @@ namespace RebitMqPostman.BLL.RebitMq
                     channel.BasicPublish(exchange: "", routingKey: _rabbitMqConfiguration.QueueName, basicProperties: null, body: body);
 
                     _logger.LogInformation(json, "RebitMq send message");
-                    _customLogger.LogInformation(json, "RebitMq send message");
                 }
             }
         }
