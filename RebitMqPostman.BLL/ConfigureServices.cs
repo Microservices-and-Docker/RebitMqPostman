@@ -27,7 +27,7 @@ namespace RabbitMqPostman.BLL
              //   services.AddHostedService<RabbitMqNewCustomerListener>();
             }
 
-            services.AddTransient<IRebitMqSender, RabitMqSender>();
+            services.AddTransient<IRebitMqSender, RabbitMqSender>();
 
             //for mediatoR
             services.AddTransient<IRequestHandler<CreateCustomerCommand, Customer>, CreateCustomerCommandHandler>();

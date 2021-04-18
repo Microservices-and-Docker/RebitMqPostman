@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using RabbitMqPostman.Common.Models;
-using Microsoft.Extensions.Logging;
+using RabbitMqPostman.Common.Interfaces;
 
 namespace RabbitMqPostman.Configuration.Middlewares
 {
@@ -16,40 +16,44 @@ namespace RabbitMqPostman.Configuration.Middlewares
         private RequestInfo _requestInfo;
         private readonly RequestDelegate _next;
         private readonly AppSettings _appSettings;
-        private readonly ILogger<JwtTokenMiddleware> _logger;
+        private readonly IApiLogger _logger;
+        private readonly ILocalizerError _localizer;
 
-        public JwtTokenMiddleware(ILogger<JwtTokenMiddleware> logger, RequestDelegate next,
+        public JwtTokenMiddleware(IApiLogger logger, RequestDelegate next, ILocalizerError localizer,
                                   IOptions<AppSettings> appSettings, IOptions<RequestInfo> requestInfo)
         {
             _next = next;
             _logger = logger;
+            _localizer = localizer;
             _appSettings = appSettings.Value;
             _requestInfo = requestInfo.Value;
         }
 
         public async Task Invoke(HttpContext context)
         {
-            var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-
+            var token = context.Request.Headers["Authorization"]
+                                       .FirstOrDefault()?
+                                       .Split(" ")
+                                       .Last();
             try
             {
                 if (token == null)
-                    throw new Exception("JwtToken is null");
+                    throw new ApiException(ErrorCodes.JwtToken_IsEmpty);
 
                 ValidateJwtToken(context, token);
 
                 await _next(context);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                //todo add localization error
-                //var err = localizer.BuildError(ex.Error);
-                // _logger.LogInformation(new EventId(0, _requestInfo.CorrelationId.ToString()), e, err);
+                var err = _localizer.BuildError(ex);
 
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
 
-                //   await context.Response.WriteAsync(err).ConfigureAwait(false);
+                await context.Response.WriteAsync(err).ConfigureAwait(false);
+
+                _logger.LogError(ex, err);
             }
         }
 
@@ -81,11 +85,11 @@ namespace RabbitMqPostman.Configuration.Middlewares
             }
             catch (SecurityTokenInvalidSignatureException e)
             {
-                throw new RabbitMqPostmanException(ErrorCodes.JwtToken_SignatureValidationFailed, e.Message);
+                throw new ApiException(ErrorCodes.JwtToken_SignatureValidationFailed, e.Message);
             }
             catch (SecurityTokenExpiredException e)
             {
-                throw new RabbitMqPostmanException(ErrorCodes.JwtToken_TokenIsExpired, e.Message);
+                throw new ApiException(ErrorCodes.JwtToken_TokenIsExpired, e.Message);
             }
         }
     }

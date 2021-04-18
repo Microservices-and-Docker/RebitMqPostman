@@ -4,25 +4,19 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using RabbitMqPostman.Common.Models;
-using RabbitMqPostman.Common.Infrastructure;
+using RabbitMqPostman.Common.Interfaces;
 
 namespace RabbitMqPostman.Configuration.Middlewares
 {
     public class RequestResponseLoggingMiddleware
     {
-        private RequestInfo _requestInfo;
-        private readonly ILogger _logger;
+        private readonly IApiLogger _logger;
         private readonly RequestDelegate _next;
 
-        public RequestResponseLoggingMiddleware(RequestDelegate next, ILogger<RequestResponseLoggingMiddleware> logger,
-                                                IOptions<RequestInfo> requestInfo)
+        public RequestResponseLoggingMiddleware(RequestDelegate next, IApiLogger logger)
         {
             _next = next;
             _logger = logger;
-            _requestInfo = requestInfo.Value;
         }
 
         public async Task Invoke(HttpContext context)
@@ -43,12 +37,11 @@ namespace RabbitMqPostman.Configuration.Middlewares
 
             string requestMethod = request.Method;
             string url = context.Request.GetDisplayUrl();
-            string phone = _requestInfo.UserInfo.PhoneNumber;
             string requestBody = await new StreamReader(request.Body, Encoding.Default).ReadToEndAsync();
 
             request.Body.Position = 0;
 
-            _logger.LogInformationRequest(_requestInfo, requestBody, url, requestMethod);
+            _logger.LogInformationRequest(requestBody, url, requestMethod);
         }
 
         private async Task LogResponse(HttpContext context, Stopwatch sw)
@@ -72,7 +65,7 @@ namespace RabbitMqPostman.Configuration.Middlewares
 
                     sw.Stop();
 
-                    _logger.LogInformationResponse(_requestInfo.CorrelationId, response, context.Response.StatusCode, sw.ElapsedMilliseconds);
+                    _logger.LogInformationResponse(response, context.Response.StatusCode, sw.ElapsedMilliseconds);
                 }
             }
         }

@@ -9,6 +9,9 @@ using RabbitMqPostman.BLL;
 using RabbitMqPostman.Configuration.Services;
 using RabbitMqPostman.Configuration.Middlewares;
 using RabbitMqPostman.Common.Models;
+using RabbitMqPostman.Common.Interfaces;
+using RabbitMqPostman.Common.Infrastructure;
+using RabbitMqPostman.Resources.ErrorMessage;
 
 namespace RabbitMqPostman
 {
@@ -30,6 +33,7 @@ namespace RabbitMqPostman
 
             services.AddControllers();
             services.AddVersioning();
+            services.AddLocalizationService();
             services.AddAutoMapper(typeof(Startup));
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddSwaggerService("RebitMq Postman");
@@ -38,6 +42,9 @@ namespace RabbitMqPostman
             services.ConfigureBLL(Configuration);
 
             services.AddScoped<RequestInfo>();
+            services.AddScoped<ILocalizerError, LocalizerError<LocalizationErrorMessage>>();
+
+            services.AddTransient<IApiLogger, ApiLogger>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -51,17 +58,15 @@ namespace RabbitMqPostman
 
             app.AddSwaggerDefaultRoute("RebitMqPostman API V1");
             app.UseRouting();
-
-            //todo add request/response logger
-            //todo добавить обработку ошибок
+                                 
             //todo add validator
             //add cache
 
-            // app.UseRequestLocalization();
+             app.UseRequestLocalization();
             //app.UseMiddleware<JwtTokenMiddleware>();
             app.UseMiddleware<CorrelationMiddleware>();
             app.UseMiddleware<RequestResponseLoggingMiddleware>();
-            //app.UseExceptionHandler(options => options.UseMiddleware<ExceptionMiddleware>());
+            app.UseExceptionHandler(options => options.UseMiddleware<ExceptionMiddleware>());
 
             app.UseEndpoints(endpoints =>
             {

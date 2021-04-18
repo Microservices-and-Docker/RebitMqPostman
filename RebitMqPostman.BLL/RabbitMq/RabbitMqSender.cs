@@ -1,28 +1,24 @@
 ﻿using System;
 using System.Text;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMqPostman.BLL.Interfaces;
 using RabbitMqPostman.BLL.Models;
-using RabbitMqPostman.Common.Infrastructure;
+using RabbitMqPostman.Common.Interfaces;
 using RabbitMqPostman.Common.Models;
 
 namespace RabbitMqPostman.BLL.RebitMq
 {
-    public class RabitMqSender : IRebitMqSender
+    public class RabbitMqSender : IRebitMqSender
     {
         private IConnection _connection;
-        private readonly ILogger<RabitMqSender> _logger;
+        private readonly IApiLogger _logger;
         private readonly RabbitMqConfiguration _rabbitMqConfiguration;
-        private readonly RequestInfo _requestInfo;
 
-        public RabitMqSender(ILogger<RabitMqSender> logger, IOptions<RabbitMqConfiguration> rabbitMqOptions,
-                             IOptions<RequestInfo> requestInfo)
+        public RabbitMqSender(IApiLogger logger, IOptions<RabbitMqConfiguration> rabbitMqOptions)
         {
             _logger = logger;
-            _requestInfo = requestInfo.Value;
             _rabbitMqConfiguration = rabbitMqOptions.Value;
 
             CreateConnection();
@@ -30,7 +26,7 @@ namespace RabbitMqPostman.BLL.RebitMq
 
         public void SendMessage(object message)
         {
-            _logger.LogDebug(_requestInfo.CorrelationId, "RebitMq start send message");
+            _logger.LogDebug("RebitMq start send message");
 
             if (ConnectionExists() && _rabbitMqConfiguration.Enabled)
             {
@@ -43,7 +39,7 @@ namespace RabbitMqPostman.BLL.RebitMq
 
                     channel.BasicPublish(exchange: "", routingKey: _rabbitMqConfiguration.QueueName, basicProperties: null, body: body);
 
-                    _logger.LogDebug(_requestInfo.CorrelationId, "RebitMq send message");
+                    _logger.LogDebug(message, "RebitMq send message");
                 }
             }
         }
@@ -61,11 +57,13 @@ namespace RabbitMqPostman.BLL.RebitMq
 
                 _connection = factory.CreateConnection();
 
-                _logger.LogDebug(_requestInfo.CorrelationId, "Connection created");
+                _logger.LogDebug(_rabbitMqConfiguration.Hostname, "Connection created");
             }
             catch (Exception ex)
             {
-                _logger.LogError(_requestInfo.CorrelationId, ex, "Could not create connection");
+                _logger.LogError(ex, "Could not create connection");
+
+                throw new ApiException(ErrorCodes.RabbitMq_ConectionError);
             }
         }
 
@@ -73,7 +71,7 @@ namespace RabbitMqPostman.BLL.RebitMq
         {
             if (_connection != null)
             {
-                _logger.LogDebug(_requestInfo.CorrelationId, "Connection exist");
+                _logger.LogDebug("Connection exist");
 
                 return true;
             }
