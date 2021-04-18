@@ -38,6 +38,7 @@ namespace RabbitMqPostman
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddSwaggerService("RebitMq Postman");
             services.AddNLogConfiguration(appConfiguration);
+            services.AddResponseCaches(Configuration);
 
             services.ConfigureBLL(Configuration);
 
@@ -50,28 +51,23 @@ namespace RabbitMqPostman
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
 
             app.UseHttpsRedirection();
 
             app.AddSwaggerDefaultRoute("RebitMqPostman API V1");
             app.UseRouting();
-                                 
-            //todo add validator
-            //add cache
 
-             app.UseRequestLocalization();
+            //todo add validator          
+
+            app.UseRequestLocalization();
             //app.UseMiddleware<JwtTokenMiddleware>();
             app.UseMiddleware<CorrelationMiddleware>();
             app.UseMiddleware<RequestResponseLoggingMiddleware>();
             app.UseExceptionHandler(options => options.UseMiddleware<ExceptionMiddleware>());
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseResponseCaching();
         }
     }
 }

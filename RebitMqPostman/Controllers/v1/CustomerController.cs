@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
@@ -23,6 +26,27 @@ namespace RabbitMqPostman.Controllers.v1
             _mediator = mediator;
         }
 
+        private static readonly string[] Summaries = new[]
+       {
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        };
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<WeatherForecast>), StatusCodes.Status200OK)]
+        [ResponseCache(VaryByQueryKeys = new string[] { "WeatherForecast" }, CacheProfileName = "GetLoyaltyCardInfo")]
+        public ActionResult<IEnumerable<WeatherForecast>> Get()
+        {
+            var rng = new Random();
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = rng.Next(-20, 55),
+                Summary = Summaries[rng.Next(Summaries.Length)]
+            })
+            .ToArray();
+        }
+
         /// <summary>
         /// Action to create a new customer in the database.
         /// </summary>
@@ -31,10 +55,10 @@ namespace RabbitMqPostman.Controllers.v1
         /// <response code="200">Returned if the customer was created</response>
         /// <response code="400">Returned if the model couldn't be parsed or the customer couldn't be saved</response>
         /// <response code="422">Returned when the validation failed</response>
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        [HttpPost]
         public async Task<ActionResult<Customer>> Index(CreateCustomerModel createCustomerModel)
         {
             return await _mediator.Send(new CreateCustomerCommand

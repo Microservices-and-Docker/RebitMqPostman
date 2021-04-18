@@ -4,6 +4,12 @@
         <name>RabbitMqPostman</name>
     </assembly>
     <members>
+        <member name="M:RabbitMqPostman.Configuration.Services.ResponseCacheExtension.AddResponseCaches(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary> 
+            Добавить настройки кеширование ответов из файла appsettings.json 
+            Для добавления кеша на метод контролера надо указать атрибут и имя кеша [ResponseCache(CacheProfileName = "CachingName")]
+            </summary>
+        </member>
         <member name="M:RabbitMqPostman.Controllers.v1.CustomerController.Index(RabbitMqPostman.Models.v1.CreateCustomerModel)">
             <summary>
             Action to create a new customer in the database.
@@ -13,6 +19,18 @@
             <response code="200">Returned if the customer was created</response>
             <response code="400">Returned if the model couldn't be parsed or the customer couldn't be saved</response>
             <response code="422">Returned when the validation failed</response>
+        </member>
+        <member name="P:RabbitMqPostman.Models.v1.ResponseCacheSetting.CacheName">
+            <summary>имя профиля кэширования </summary>
+        </member>
+        <member name="P:RabbitMqPostman.Models.v1.ResponseCacheSetting.Duration">
+            <summary> максимальное время кэширования в секундах </summary>
+        </member>
+        <member name="P:RabbitMqPostman.Models.v1.ResponseCacheSetting.Location">
+            <summary> определяет место кэширования </summary>
+        </member>
+        <member name="P:RabbitMqPostman.Models.v1.ResponseCacheSetting.NoStore">
+            <summary> определяет, будет ли ответ кэшироваться. Если равен true, то ответ не кэшируется </summary>       
         </member>
     </members>
 </doc>
