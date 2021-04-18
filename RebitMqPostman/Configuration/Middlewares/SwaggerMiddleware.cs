@@ -2,7 +2,7 @@
 
 namespace RabbitMqPostman.Configuration.Middlewares
 {
-    public static class SwaggerExtensions
+    public static class SwaggerMiddleware
     {
         public static IApplicationBuilder AddSwaggerDefaultRoute(this IApplicationBuilder app, string fullAppName)
         {
