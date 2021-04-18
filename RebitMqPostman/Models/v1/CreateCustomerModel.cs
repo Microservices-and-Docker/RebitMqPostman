@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace RebitMqPostman.Models.v1
+namespace RabbitMqPostman.Models.v1
 {
     public class CreateCustomerModel
     {

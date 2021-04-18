@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using RebitMqPostman.Common.Models;
+using RabbitMqPostman.Common.Models;
 
-namespace RebitMqPostman.Configuration.Services
+namespace RabbitMqPostman.Configuration.Services
 {
     public static class NLogServiceExtension
     {

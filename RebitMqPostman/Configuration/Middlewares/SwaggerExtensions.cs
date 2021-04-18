@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace RebitMqPostman.Configuration.Middlewares
+namespace RabbitMqPostman.Configuration.Middlewares
 {
     public static class SwaggerExtensions
     {

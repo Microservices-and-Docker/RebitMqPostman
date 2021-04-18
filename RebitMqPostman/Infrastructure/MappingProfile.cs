@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using RebitMqPostman.BLL.Models;
-using RebitMqPostman.Models.v1;
+using RabbitMqPostman.BLL.Models;
+using RabbitMqPostman.Models.v1;
 
-namespace RebitMqPostman.Infrastructure
+namespace RabbitMqPostman.Infrastructure
 {
     public class MappingProfile : Profile
     {

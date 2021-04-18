@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using AutoMapper;
-using RebitMqPostman.BLL.Models;
-using RebitMqPostman.BLL.v1.Handlers.Comands;
-using RebitMqPostman.Models.v1;
+using RabbitMqPostman.BLL.Models;
+using RabbitMqPostman.BLL.v1.Handlers.Comands;
+using RabbitMqPostman.Models.v1;
 
-namespace RebitMqPostman.Controllers.v1
+namespace RabbitMqPostman.Controllers.v1
 {
     [ApiController]
     [ApiVersion("1.0")]

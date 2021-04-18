@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RebitMqPostman", "RebitMqPostman\RebitMqPostman.csproj", "{84705B6F-0F42-43E8-8D5D-8511DAB9277B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMqPostman", "RebitMqPostman\RabbitMqPostman.csproj", "{84705B6F-0F42-43E8-8D5D-8511DAB9277B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RebitMqPostman.BLL", "RebitMqPostman.BLL\RebitMqPostman.BLL.csproj", "{57D06EE4-A742-4835-A2CD-2C954E1645CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMqPostman.BLL", "RebitMqPostman.BLL\RabbitMqPostman.BLL.csproj", "{57D06EE4-A742-4835-A2CD-2C954E1645CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RebitMqPostman.Common", "RebitMq.Commmon\RebitMqPostman.Common.csproj", "{71F4F9A0-A6BF-4838-9BB4-B031AB7C3418}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMqPostman.Common", "RebitMq.Commmon\RabbitMqPostman.Common.csproj", "{71F4F9A0-A6BF-4838-9BB4-B031AB7C3418}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

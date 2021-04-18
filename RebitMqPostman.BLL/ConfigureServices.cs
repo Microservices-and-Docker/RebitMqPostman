@@ -1,14 +1,14 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RebitMqPostman.BLL.Interfaces;
-using RebitMqPostman.BLL.Models;
-using RebitMqPostman.BLL.RebitMq;
-using RebitMqPostman.BLL.v1.Handlers;
-using RebitMqPostman.BLL.v1.Handlers.Comands;
-using RebitMqPostman.BLL.v1.Services;
+using RabbitMqPostman.BLL.Interfaces;
+using RabbitMqPostman.BLL.Models;
+using RabbitMqPostman.BLL.RebitMq;
+using RabbitMqPostman.BLL.v1.Handlers;
+using RabbitMqPostman.BLL.v1.Handlers.Comands;
+using RabbitMqPostman.BLL.v1.Services;
 
-namespace RebitMqPostman.BLL
+namespace RabbitMqPostman.BLL
 {
     public static class ConfigureServices
     {
@@ -23,8 +23,8 @@ namespace RebitMqPostman.BLL
             services.Configure<RabbitMqConfiguration>(serviceClientSettingsConfig);
 
             if (serviceClientSettings.Enabled)
-            {
-                services.AddHostedService<RabbitMqNewCustomerListener>();
+            {//todo включить мониторинг ребит
+             //   services.AddHostedService<RabbitMqNewCustomerListener>();
             }
 
             services.AddTransient<IRebitMqSender, RabitMqSender>();

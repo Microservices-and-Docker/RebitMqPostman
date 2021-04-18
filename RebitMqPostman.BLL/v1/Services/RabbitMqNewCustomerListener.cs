@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.Extensions.Options;
-using RebitMqPostman.BLL.Models;
-using RebitMqPostman.BLL.RebitMq;
+using RabbitMqPostman.BLL.Models;
+using RabbitMqPostman.BLL.RebitMq;
 
-namespace RebitMqPostman.BLL.v1.Services
+namespace RabbitMqPostman.BLL.v1.Services
 {
     public class RabbitMqNewCustomerListener : RabbitMqListener<Customer>
     {

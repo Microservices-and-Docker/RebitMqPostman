@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using RebitMqPostman.BLL.Models;
+using RabbitMqPostman.BLL.Models;
 
-namespace RebitMqPostman.BLL.v1.Handlers.Comands
+namespace RabbitMqPostman.BLL.v1.Handlers.Comands
 {
     public class CreateCustomerCommand : IRequest<Customer>
     {

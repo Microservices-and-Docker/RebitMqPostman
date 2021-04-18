@@ -1,4 +1,4 @@
-﻿namespace RebitMqPostman.BLL.Models
+﻿namespace RabbitMqPostman.BLL.Models
 {
     public class RabbitMqConfiguration
     {

@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace RebitMqPostman.Configuration.Services
+namespace RabbitMqPostman.Configuration.Services
 {
     public static class SwaggerServiceExtension
     {

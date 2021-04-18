@@ -1,4 +1,4 @@
-﻿namespace RebitMqPostman.BLL.Interfaces
+﻿namespace RabbitMqPostman.BLL.Interfaces
 {
     public interface IRebitMqSender
     {

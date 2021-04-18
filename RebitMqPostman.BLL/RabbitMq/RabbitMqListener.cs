@@ -5,9 +5,9 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using RebitMqPostman.BLL.Models;
+using RabbitMqPostman.BLL.Models;
 
-namespace RebitMqPostman.BLL.RebitMq
+namespace RabbitMqPostman.BLL.RebitMq
 {
     public abstract class RabbitMqListener<T> : BackgroundService
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace RebitMqPostman.Configuration.Services
+namespace RabbitMqPostman.Configuration.Services
 {
     public static class VersioningExtension
     {

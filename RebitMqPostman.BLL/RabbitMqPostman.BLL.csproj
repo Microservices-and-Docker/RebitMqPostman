@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RebitMq.Commmon\RebitMqPostman.Common.csproj" />
+    <ProjectReference Include="..\RebitMq.Commmon\RabbitMqPostman.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

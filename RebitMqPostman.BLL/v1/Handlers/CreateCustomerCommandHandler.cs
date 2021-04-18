@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using RebitMqPostman.BLL.Interfaces;
-using RebitMqPostman.BLL.Models;
-using RebitMqPostman.BLL.v1.Handlers.Comands;
+using RabbitMqPostman.BLL.Interfaces;
+using RabbitMqPostman.BLL.Models;
+using RabbitMqPostman.BLL.v1.Handlers.Comands;
 
-namespace RebitMqPostman.BLL.v1.Handlers
+namespace RabbitMqPostman.BLL.v1.Handlers
 {
     public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, Customer>
     {

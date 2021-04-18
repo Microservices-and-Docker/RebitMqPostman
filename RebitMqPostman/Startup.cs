@@ -5,12 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MediatR;
-using RebitMqPostman.BLL;
-using RebitMqPostman.Configuration.Services;
-using RebitMqPostman.Configuration.Middlewares;
-using RebitMqPostman.Common.Models;
+using RabbitMqPostman.BLL;
+using RabbitMqPostman.Configuration.Services;
+using RabbitMqPostman.Configuration.Middlewares;
+using RabbitMqPostman.Common.Models;
 
-namespace RebitMqPostman
+namespace RabbitMqPostman
 {
     public class Startup
     {
@@ -25,6 +25,7 @@ namespace RebitMqPostman
         {
             var appConfigurationStr = Configuration.GetSection("AppSettings");
             var appConfiguration = appConfigurationStr.Get<AppSettings>();
+
             services.Configure<AppSettings>(appConfigurationStr);
 
             services.AddControllers();
@@ -35,6 +36,8 @@ namespace RebitMqPostman
             services.AddNLogConfiguration(appConfiguration);
 
             services.ConfigureBLL(Configuration);
+
+            services.AddScoped<RequestInfo>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -49,10 +52,16 @@ namespace RebitMqPostman
             app.AddSwaggerDefaultRoute("RebitMqPostman API V1");
             app.UseRouting();
 
-            app.UseAuthorization();
             //todo add request/response logger
             //todo добавить обработку ошибок
             //todo add validator
+            //add cache
+
+            // app.UseRequestLocalization();
+            //app.UseMiddleware<JwtTokenMiddleware>();
+            app.UseMiddleware<CorrelationMiddleware>();
+            app.UseMiddleware<RequestResponseLoggingMiddleware>();
+            //app.UseExceptionHandler(options => options.UseMiddleware<ExceptionMiddleware>());
 
             app.UseEndpoints(endpoints =>
             {
