@@ -1,11 +1,11 @@
 ﻿using System;
-using RabbitMqPostman.Common.Models;
+using RabbitMqPostman.Models.v1;
 
 namespace RabbitMqPostman.Interfaces
 {
     public interface ILocalizer
     {
         string BuildError(Exception ex);
-        ApiException LocalizeTheError(Exception ex);
+        ErrorResponse LocalizeTheError(Exception ex);
     }
 }

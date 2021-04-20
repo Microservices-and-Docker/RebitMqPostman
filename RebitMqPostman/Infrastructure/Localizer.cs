@@ -3,6 +3,7 @@ using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using RabbitMqPostman.Common.Models;
 using RabbitMqPostman.Interfaces;
+using RabbitMqPostman.Models.v1;
 
 namespace RabbitMqPostman.Infrastructure
 {
@@ -15,23 +16,22 @@ namespace RabbitMqPostman.Infrastructure
             _localizer = localizer;
         }
 
-        public ApiException LocalizeTheError(Exception ex)
+        public ErrorResponse LocalizeTheError(Exception ex)
         {
             string message;
-            ApiException error = null;
-            //todo create error response
-            //todo transffere to RabbitMqPostman dll
+            ErrorResponse error = null;
+
             switch (ex)
             {
                 case ApiException e:
                     message = _localizer[e.ErrorCode.ToString()] ?? e.ErrorCode.ToString();
-                    error = new ApiException(e.ErrorCode, e.Reason, message);
+                    error = new ErrorResponse(message, e.Reason);
                     break;
 
                 default:
                     message = _localizer["Undefined"] ?? _localizer[ex.Message];
                     string reason = ex.InnerException?.Message ?? ex.Message;
-                    error = new ApiException(ErrorCodes.Undefined, reason, message);
+                    error = new ErrorResponse(message, reason);
                     break;
             }
 
