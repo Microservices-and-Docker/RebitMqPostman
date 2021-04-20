@@ -31,13 +31,13 @@ namespace RabbitMqPostman.Configuration.Middlewares
         public async Task Invoke(HttpContext context, ILocalizer localizer)
         {
             var token = context.Request.Headers["Authorization"]
-                                       .FirstOrDefault()?
-                                       .Split(" ")
-                                       .Last();
+                                          .FirstOrDefault()?
+                                          .Split(" ")
+                                          .Last();
             try
             {
                 if (token == null)
-                    throw new ApiException(ErrorCodes.JwtToken_IsEmpty);
+                    throw new ApiException(ErrorCodes.JwtToken_IsEmpty, "Items Authorization in header not set");
 
                 ValidateJwtToken(context, token);
 
