@@ -1,16 +1,16 @@
 ﻿using System;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
-using RabbitMqPostman.Common.Interfaces;
 using RabbitMqPostman.Common.Models;
+using RabbitMqPostman.Interfaces;
 
-namespace RabbitMqPostman.Common.Infrastructure
+namespace RabbitMqPostman.Infrastructure
 {
-    public class LocalizerError<T> : ILocalizerError
+    public class Localizer<T> : ILocalizer
     {
         protected readonly IStringLocalizer<T> _localizer;
 
-        public LocalizerError(IStringLocalizer<T> localizer)
+        public Localizer(IStringLocalizer<T> localizer)
         {
             _localizer = localizer;
         }
@@ -19,7 +19,8 @@ namespace RabbitMqPostman.Common.Infrastructure
         {
             string message;
             ApiException error = null;
-
+            //todo create error response
+            //todo transffere to RabbitMqPostman dll
             switch (ex)
             {
                 case ApiException e:

@@ -16,6 +16,7 @@ namespace RabbitMqPostman.BLL.v1.Services
 
         public override void HandleMessage(Customer message)
         {           
+            //todo добавить запись в базу
             // var customer = await _customerRepository.AddAsync(request.Customer);
 
             throw new NotImplementedException();

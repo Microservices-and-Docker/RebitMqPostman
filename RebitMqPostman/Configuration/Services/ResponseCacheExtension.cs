@@ -14,7 +14,6 @@ namespace RabbitMqPostman.Configuration.Services
         /// </summary>
         public static void AddResponseCaches(this IServiceCollection services, IConfiguration configuration)
         {
-
             var responseCachesSetting = new List<ResponseCacheSetting>();
             configuration.GetSection("ResponseCachesSetting").Bind(responseCachesSetting);
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using RabbitMqPostman.Common.Interfaces;
+using RabbitMqPostman.Interfaces;
 
 namespace RabbitMqPostman.Configuration.Middlewares
 {
@@ -16,7 +17,7 @@ namespace RabbitMqPostman.Configuration.Middlewares
             _logger = logger;
         }
 
-        public async Task Invoke(HttpContext context, ILocalizerError localizer)
+        public async Task Invoke(HttpContext context, ILocalizer localizer)
         {
             await _next.Invoke(context);
 

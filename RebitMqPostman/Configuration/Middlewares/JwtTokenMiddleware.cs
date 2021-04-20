@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using RabbitMqPostman.Common.Models;
 using RabbitMqPostman.Common.Interfaces;
+using RabbitMqPostman.Interfaces;
 
 namespace RabbitMqPostman.Configuration.Middlewares
 {
@@ -17,19 +18,17 @@ namespace RabbitMqPostman.Configuration.Middlewares
         private readonly RequestDelegate _next;
         private readonly AppSettings _appSettings;
         private readonly IApiLogger _logger;
-        private readonly ILocalizerError _localizer;
 
-        public JwtTokenMiddleware(IApiLogger logger, RequestDelegate next, ILocalizerError localizer,
+        public JwtTokenMiddleware(IApiLogger logger, RequestDelegate next,
                                   IOptions<AppSettings> appSettings, IOptions<RequestInfo> requestInfo)
         {
             _next = next;
             _logger = logger;
-            _localizer = localizer;
             _appSettings = appSettings.Value;
             _requestInfo = requestInfo.Value;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context, ILocalizer localizer)
         {
             var token = context.Request.Headers["Authorization"]
                                        .FirstOrDefault()?
@@ -46,7 +45,7 @@ namespace RabbitMqPostman.Configuration.Middlewares
             }
             catch (Exception ex)
             {
-                var err = _localizer.BuildError(ex);
+                var err = localizer.BuildError(ex);
 
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;

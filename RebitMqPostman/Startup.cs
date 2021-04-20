@@ -12,6 +12,8 @@ using RabbitMqPostman.Common.Models;
 using RabbitMqPostman.Common.Interfaces;
 using RabbitMqPostman.Common.Infrastructure;
 using RabbitMqPostman.Resources.ErrorMessage;
+using RabbitMqPostman.Interfaces;
+using RabbitMqPostman.Infrastructure;
 
 namespace RabbitMqPostman
 {
@@ -43,7 +45,7 @@ namespace RabbitMqPostman
             services.ConfigureBLL(Configuration);
 
             services.AddScoped<RequestInfo>();
-            services.AddScoped<ILocalizerError, LocalizerError<LocalizationErrorMessage>>();
+            services.AddScoped<ILocalizer, Localizer<LocalizationErrorMessage>>();
 
             services.AddTransient<IApiLogger, ApiLogger>();
         }
@@ -58,10 +60,8 @@ namespace RabbitMqPostman
             app.AddSwaggerDefaultRoute("RebitMqPostman API V1");
             app.UseRouting();
 
-            //todo add validator          
-
             app.UseRequestLocalization();
-            //app.UseMiddleware<JwtTokenMiddleware>();
+            app.UseMiddleware<JwtTokenMiddleware>();
             app.UseMiddleware<CorrelationMiddleware>();
             app.UseMiddleware<RequestResponseLoggingMiddleware>();
             app.UseExceptionHandler(options => options.UseMiddleware<ExceptionMiddleware>());
