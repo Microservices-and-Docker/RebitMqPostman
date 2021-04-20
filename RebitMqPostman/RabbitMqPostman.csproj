@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\GitHub\RebitMq\CoreRebitMq\RebitMqPostman\RebitMqPostman\RebitMqPostman\RebitMqPostman.xml</DocumentationFile>
+    <DocumentationFile>D:\GitHub\RebitMq\CoreRebitMq\RebitMqPostman\RebitMqPostman\RebitMqPostman\RabbitMqPostman.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
@@ -39,12 +39,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RebitMqPostman.BLL\RabbitMqPostman.BLL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="RabbitMqPostman.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 

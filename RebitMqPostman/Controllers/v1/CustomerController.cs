@@ -27,10 +27,9 @@ namespace RabbitMqPostman.Controllers.v1
         }
 
         private static readonly string[] Summaries = new[]
-       {
+        {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<WeatherForecast>), StatusCodes.Status200OK)]
